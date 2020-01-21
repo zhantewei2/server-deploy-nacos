@@ -1,0 +1,8 @@
+---
+- hosts: market_nacos_servers
+  remote_user: root
+  vars:
+    nacos_deploy_path: /home/market-dev/nacos
+  roles:
+    - role: nacos-deploy
+  

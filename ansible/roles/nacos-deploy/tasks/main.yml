@@ -1,0 +1,4 @@
+- name: show
+  shell: echo "main"
+- name: make nacos dir
+  script: deploy.sh 
