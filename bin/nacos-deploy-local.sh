@@ -31,4 +31,9 @@ console 'Install sql statement~'
 echo $bin_path/lib/initializeMysql.py
 python $bin_path/lib/initializeMysql.py
 
+console 'Initial nacos user'
+
+echo $bin_path/lib/createMysqlUser.py
+python $bin_path/lib/createMysqlUser.py
+
 console 'completed!'

@@ -32,7 +32,8 @@ startup_file=$nacos_path/bin/startup.sh
 
 if [ ! -d "$nacos_path" ]; then
     echo "create nacos_path: $nacos_path"
-    mkdir $nacos_path
+    sudo mkdir -p $nacos_path
+    mkdir -p $nacos_path
 fi
 #下载文件名
 down_file_name="${download_url##*/}"
@@ -66,7 +67,7 @@ function handle_tar_error(){
         exit
     fi
 
-    compress_retry_now = $(expr $compress_retry_now + 1)
+    compress_retry_now = $(( $compress_retry_now + 1 ))
     rm -rf download_url
     wget $download_url
     compress_tar
@@ -74,6 +75,9 @@ function handle_tar_error(){
 
 function compress_tar(){
     tar -xvzf $down_file_name || handle_tar_error
+    #remove tar
+    file_tar_name=${down_file_name##*/}
+    rm -f $file_tar_name
 }
 
 
@@ -117,6 +121,11 @@ console "write application.properties completed!"
 ##
 write_cluster_config
 console "write cluster.conf completed!"
+##
+# 复制logback 文件
+##
+cp $HOST_PATH/logback.xml $nacos_path/conf/nacos-logback.xml
+
 ##
 # 写入 startup.sh
 ##
